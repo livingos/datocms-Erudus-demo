@@ -91,5 +91,19 @@ module.exports = (dato, root, i18n) => {
       });
     });
   });
-};
 
+  // Create a `article` directory (or empty it if already exists)...
+  root.directory('content/articles', dir => {
+    // ...and for each of the works stored online...
+    dato.articles.forEach((article, index) => {
+      // ...create a markdown file with all the metadata in the frontmatter
+      dir.createPost(`${article.slug}.md`, 'yaml', {
+        frontmatter: {
+          title: article.title,
+          weight: index
+        },
+        content: article.content
+      });
+    });
+  });
+};
